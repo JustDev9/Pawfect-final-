@@ -1,0 +1,31 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(.*)$ main.php?request=$1 [L,QSA]
+    RewriteRule .* - [e=HTTP_AUTHORIZATION:%{HTTP:AUTHORIZATION}]
+</IfModule>
+
+# Directory configurations
+<Directory "C:/xampp/htdocs">
+    Options Indexes FollowSymLinks Includes ExecCGI
+    AllowOverride All
+    Require all granted
+</Directory>
+
+# Uploaded images directory configuration
+<Directory "uploaded_images">
+    Options Indexes FollowSymLinks
+    AllowOverride None 
+    Require all granted
+</Directory>
+
+# Serve images directly
+RewriteRule ^uploaded_images/(.*)$ uploaded_images/$1 [L]
+
+# Add security headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>
