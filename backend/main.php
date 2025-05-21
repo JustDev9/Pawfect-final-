@@ -73,22 +73,16 @@ switch ($_SERVER['REQUEST_METHOD']) {
             try {
                 $input = json_decode(file_get_contents('php://input'), true);
 
-               
-                
-                // // Validate required fields
-                // if (!isset($input['email'], $input['password'])) {
-                //     throw new Exception("Missing credentials");
-                // }
-        
-                // // Sanitize inputs
-                // $email = $input['email'];
-                // $password = $input['password'];
+               // input validation 
+               // $input eto ung email: this.loginEmail and ung password: this.loginPassword
 
-                // if (empty($email) || empty($password)) {
-                //     throw new Exception("Email and password cannot be empty");
-                // }
-        
-                // Call auth login
+                // const response = await api.post(`${API_URL}/register`, {
+				// 	email: this.loginEmail,
+				// 	password: this.loginPassword,
+				// });
+               
+
+                // call si register dun sa auth.models
                 $result = $auth->register($input['name'], $input['email'], $input['password']);
                 echo json_encode($result);
         
