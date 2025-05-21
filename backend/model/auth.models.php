@@ -2,6 +2,7 @@
 
 interface IAuthModels {
     public function login($email, $password);
+    public function register($fullname, $email, $password);
     // public function verifyAuthToken();
     // public function cleanupExpiredTokens();
     // public function getUserIdFromToken($token);
@@ -25,6 +26,19 @@ class AuthModels implements IAuthModels {
             // logic for login...
 
             return $this->glb->responsePayload(['token' => 'dummy_token'], 'success', 'Login successful', 200);
+        } catch (PDOException $e) {
+            return $this->glb->responsePayload([], 'error', 'Database error: ' . $e->getMessage(), 500);
+        }
+    }
+
+    public function register($fullname, $email, $password) {
+        try {
+            // Check if user already exists
+            // logic for registration...
+
+            error_log("registration: " . $fullname . " " . $email . " " . $password);
+
+            return $this->glb->responsePayload(null, 'success', 'Registration successful', 200);
         } catch (PDOException $e) {
             return $this->glb->responsePayload([], 'error', 'Database error: ' . $e->getMessage(), 500);
         }
